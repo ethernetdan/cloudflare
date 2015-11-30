@@ -206,6 +206,7 @@ type UpdateRecord struct {
 	Content  string
 	Ttl      string
 	Priority string
+	Proxied  bool
 }
 
 // UpdateRecord destroys a record by the ID specified and
@@ -233,6 +234,8 @@ func (c *Client) UpdateRecord(domain string, id string, opts *UpdateRecord) erro
 	if opts.Ttl != "" {
 		params["ttl"] = opts.Ttl
 	}
+
+	params["proxied"] = fmt.Sprintf("%v", opts.Proxied)
 
 	req, err := c.NewRequest(params, "POST", "rec_edit")
 	if err != nil {
